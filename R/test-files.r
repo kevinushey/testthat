@@ -47,6 +47,16 @@ test_files <- function(paths, reporter = "summary",
 
   results <- unlist(results, recursive = FALSE)
 
+  if (file.exists(file.path(path, "cpp"))) {
+    pkg_path <- get_pkg_path(path)
+    package <- tryCatch(
+      read.dcf(file.path(pkg_path, "DESCRIPTION"), all = TRUE)[["Package"]],
+      error = function(e) NULL
+    )
+    if (!is.null(package))
+      test_compiled_code(package, test_path = path, filter = filter, ...)
+  }
+
   invisible(testthat_results(results))
 }
 
@@ -173,3 +183,12 @@ sys.source2 <- function(file, envir = parent.frame()) {
   invisible(eval(exprs, envir))
 }
 
+get_pkg_path <- function(test_path) {
+  parent_path <- dirname(normalizePath(test_path))
+  while (dirname(parent_path) != parent_path)
+  {
+    if (file.exists(file.path(parent_path, "DESCRIPTION")))
+      return(parent_path)
+    parent_path <- dirname(parent_path)
+  }
+}
