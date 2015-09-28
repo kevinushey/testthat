@@ -41,22 +41,14 @@ test_files <- function(paths, reporter = "summary",
 
   current_reporter <- find_reporter(reporter)
   current_reporter$start_reporter()
+
   results <- lapply(paths, test_file, env = env,
     reporter = current_reporter, start_end_reporter = FALSE)
+  test_compiled_code(test_path = path, filter = filter, ...)
+
   current_reporter$end_reporter()
 
   results <- unlist(results, recursive = FALSE)
-
-  if (file.exists(file.path(path, "cpp"))) {
-    pkg_path <- get_pkg_path(path)
-    package <- tryCatch(
-      read.dcf(file.path(pkg_path, "DESCRIPTION"), all = TRUE)[["Package"]],
-      error = function(e) NULL
-    )
-    if (!is.null(package))
-      test_compiled_code(package, test_path = path, filter = filter, ...)
-  }
-
   invisible(testthat_results(results))
 }
 
