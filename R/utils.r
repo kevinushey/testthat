@@ -105,3 +105,4 @@ skip_on_appveyor <- function() {
 }
 
 trim_whitespace <- function(text) gsub("^\\s*|\\s*$", "", text, perl = TRUE)
+
