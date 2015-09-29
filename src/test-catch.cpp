@@ -1,6 +1,9 @@
 #include <tests/testthat.h>
 
-int twoPlusTwo() { return 2 + 2; }
+int twoPlusTwo()
+{
+  return 2 + 2;
+}
 
 context("Example Unit Test") {
 
@@ -35,7 +38,7 @@ context("Respect 'src/Makevars'") {
   compiling_testthat = false;
 #endif
 
-  test_that("COMPILING_TESTTHAT is inheritted from 'src/Makevars'") {
+  test_that("COMPILING_TESTTHAT is inherited from 'src/Makevars'") {
     expect_true(compiling_testthat);
   }
 

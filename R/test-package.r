@@ -84,6 +84,9 @@ test_check <- function(package, filter = NULL, reporter = "check", ...) {
     stop("No tests found for ", package, call. = FALSE)
   }
 
+  Sys.setenv("R_TESTTHAT_PACKAGE" = package)
+  on.exit(Sys.unsetenv("R_TESTTHAT_PACKAGE"), add = TRUE)
+
   run_tests(package, test_path, filter, reporter, ...)
 }
 

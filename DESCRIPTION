@@ -17,8 +17,7 @@ Imports:
     crayon,
     praise
 Suggests:
-    devtools,
-    xml2
+    devtools
 License: MIT + file LICENSE
 Collate:
     'auto-test.r'
